@@ -1,0 +1,31 @@
+{
+  "name": "questionaire-graph",
+  "version": "1.0.0",
+  "description": "A GraphQL schema to interact with a Neo4j database containing a questionaire Model",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heinrichhanekom/questionaire-graph.git"
+  },
+  "keywords": [
+    "questionaire",
+    "neo4j",
+    "graphql"
+  ],
+  "author": "Heinrich Hanekom",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/heinrichhanekom/questionaire-graph/issues"
+  },
+  "homepage": "https://github.com/heinrichhanekom/questionaire-graph#readme",
+  "dependencies": {
+    "@neo4j/graphql": "^3.14.2",
+    "apollo-server": "^3.11.1",
+    "dotenv": "^16.0.3",
+    "graphql": "^16.6.0",
+    "neo4j-driver": "^5.4.0"
+  }
+}
