@@ -1,0 +1,81 @@
+# ------------------------------------------------------------------------------------------------------#
+# PEOPLE
+# ------------------------------------------------------------------------------------------------------#
+type Person {
+  id: ID! @id
+  name: String!
+
+  questioniares: [Questioniare!]! @relationship(type: "FILLED_IN", direction: OUT)
+  answerSets: [AnswerSet!]! @relationship(type: "HAS_A", direction: OUT)
+
+  createdAt: DateTime! @timestamp(operations: [CREATE])
+  updatedAt: DateTime! @timestamp(operations: [UPDATE])
+}
+
+# ------------------------------------------------------------------------------------------------------#
+# Questioniare
+# ------------------------------------------------------------------------------------------------------#
+type Questioniare {
+  id: ID! @id
+  name: String!
+
+  answerSets: [AnswerSet!]! @relationship(type: "BELONGS_TO", direction: IN)
+  people: [Person!]! @relationship(type: "FILLED_IN", direction: IN)
+
+  questions: [Question!]! @relationship(type: "QUESTION_IN", direction: IN)
+
+  createdAt: DateTime! @timestamp(operations: [CREATE])
+  updatedAt: DateTime! @timestamp(operations: [UPDATE])
+}
+
+type Question {
+  id: ID! @id
+  name: String!
+  type: InputType! @default(value: radio)
+
+  answers: [Answer!]! @relationship(type: "IS_ANSWER_TO", direction: IN)
+  questioniares: [Questioniare!]! @relationship(type: "QUESTION_IN", direction: OUT)
+
+  createdAt: DateTime! @timestamp(operations: [CREATE])
+  updatedAt: DateTime! @timestamp(operations: [UPDATE])
+}
+
+type Answer {
+  id: ID! @id
+  name: String!
+
+  answerSets: [AnswerSet!]! @relationship(type: "RESPONDED_WITH", direction: IN)
+  question: Question! @relationship(type: "IS_ANSWER_TO", direction: OUT)
+
+  createdAt: DateTime! @timestamp(operations: [CREATE])
+  updatedAt: DateTime! @timestamp(operations: [UPDATE])
+}
+
+type AnswerSet {
+  id: ID! @id
+  name: String!
+
+  person: Person! @relationship(type: "HAS_A", direction: IN)
+  questioniare: Questioniare! @relationship(type: "BELONGS_TO", direction: OUT)
+
+  responses: [Answer!]! @relationship(type: "RESPONDED_WITH", direction: OUT)
+  
+  createdAt: DateTime! @timestamp(operations: [CREATE])
+  updatedAt: DateTime! @timestamp(operations: [UPDATE])
+}
+
+# ------------------------------------------------------------------------------------------------------#
+# INTERFACES
+# ------------------------------------------------------------------------------------------------------#
+
+
+# ------------------------------------------------------------------------------------------------------#
+# INPUT TYPES
+# ------------------------------------------------------------------------------------------------------#
+
+enum InputType {
+    select
+    checkbox
+    radio
+    freetext
+}
