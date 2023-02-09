@@ -9,7 +9,7 @@ dotenv.config();
 
 
 // (You may need to replace your connection details, username and password)
-const AURA_ENDPOINT = 'bolt://localhost:7687';
+const AURA_ENDPOINT = process.env.NEO4J_AURA_ENDPOINT;
 const USERNAME = process.env.NEO4J_USER;
 const PASSWORD = process.env.NEO4J_PWD;
 
