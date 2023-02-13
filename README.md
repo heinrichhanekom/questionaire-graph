@@ -11,3 +11,8 @@ Start the apollo client
 ```
 node index.js
 ```
+
+Start the apollo client with debug logging
+```
+DEBUG=@neo4j/graphql:* node index.js
+```

@@ -5,8 +5,45 @@ type Person {
   id: ID! @id
   name: String!
 
+  # TODO: This will lead to supernodes, it might be better to use a second label on the person node instead.
+  gender: Gender! @relationship(type: "HAS_GENDER", direction: OUT)
+
+  # Relationships
+  children: [Person!]! @relationship(type: "IS_CHILD_OF", direction: IN)
+  partners: [Person!]! @relationship(type: "IS_PARTNER_OF", direction: IN)
+
+  # Geographical
+  country: Country! @relationship(type: "IS_FROM", direction: OUT)
+
+  # Survey
   surveys: [Survey!]! @relationship(type: "FILLED_IN", direction: OUT)
   answerSets: [AnswerSet!]! @relationship(type: "HAS_A", direction: OUT)
+
+  createdAt: DateTime! @timestamp(operations: [CREATE])
+  updatedAt: DateTime! @timestamp(operations: [UPDATE])
+}
+
+type Gender {
+  id: ID! @id
+  name: String!
+
+  people: [Person!]! @relationship(type: "HAS_GENDER", direction: IN)
+
+  createdAt: DateTime! @timestamp(operations: [CREATE])
+  updatedAt: DateTime! @timestamp(operations: [UPDATE])
+}
+
+# ------------------------------------------------------------------------------------------------------#
+# Geographical
+# ------------------------------------------------------------------------------------------------------#
+type Country {
+  id: ID! @id
+  name: String!
+  iso_3166_1_alpha_2: String!
+  iso_3166_1_alpha_3: String!
+  currency: String!
+
+  people: [Person!]! @relationship(type: "IS_FROM", direction: IN)
 
   createdAt: DateTime! @timestamp(operations: [CREATE])
   updatedAt: DateTime! @timestamp(operations: [UPDATE])
